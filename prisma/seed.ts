@@ -9,7 +9,7 @@ async function main() {
     update: {},
     create: {
       id: 1,
-      name: 'PayWave Café',
+      name: 'Koffee Shop MNL',
       type: 'merchant',
       balance: 0,
     },
