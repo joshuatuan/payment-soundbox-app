@@ -106,7 +106,7 @@ export default function MerchantPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">PayWave Café</h1>
+              <h1 className="text-3xl font-bold text-gray-900">{merchant.name}</h1>
               <p className="text-gray-600">Merchant Dashboard</p>
             </div>
             <div className="text-right">
@@ -134,7 +134,7 @@ export default function MerchantPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="Enter amount"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 text-gray-500 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   min="0.01"
                   step="0.01"
                 />
