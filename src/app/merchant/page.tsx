@@ -100,32 +100,37 @@ export default function MerchantPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-gray-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-8 gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">{merchant.name}</h1>
-              <p className="text-gray-600">Merchant Dashboard</p>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">{merchant.name}</h1>
+              <p className="text-gray-600 font-medium">Merchant Dashboard</p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">Total Balance</p>
-              <p className="text-2xl font-bold text-blue-600">{formatCurrency(merchant.balance)}</p>
+            <div className="text-center sm:text-right">
+              <p className="text-sm text-gray-500 font-medium mb-1">Total Balance</p>
+              <p className="text-3xl font-bold text-blue-600">{formatCurrency(merchant.balance)}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* QR Code Generation */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Generate Payment QR</h2>
+          <div className="gkash-card p-8">
+            <div className="flex items-center mb-8">
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                <span className="text-2xl">📱</span>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Generate Payment QR</h2>
+            </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div>
-                <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="amount" className="block text-sm font-semibold text-gray-700 mb-3">
                   Amount (₱)
                 </label>
                 <input
@@ -134,7 +139,7 @@ export default function MerchantPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="Enter amount"
-                  className="w-full px-3 text-gray-500 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="gkash-input w-full px-4 py-3 text-gray-700"
                   min="0.01"
                   step="0.01"
                 />
@@ -142,7 +147,7 @@ export default function MerchantPage() {
 
               {amount && parseFloat(amount) > 0 && (
                 <div className="text-center">
-                  <div className="bg-white p-4 rounded-lg border-2 border-dashed border-gray-300 inline-block">
+                  <div className="bg-white p-6 rounded-2xl border-2 border-dashed border-blue-200 inline-block shadow-sm">
                     <QRCodeCanvas
                       id="qr-code"
                       value={JSON.stringify({
@@ -155,7 +160,7 @@ export default function MerchantPage() {
                       includeMargin={true}
                     />
                   </div>
-                  <p className="mt-2 text-sm text-gray-600">
+                  <p className="mt-4 text-sm font-semibold text-gray-600">
                     Amount: {formatCurrency(parseFloat(amount))}
                   </p>
                 </div>
@@ -164,7 +169,7 @@ export default function MerchantPage() {
               <button
                 onClick={downloadQR}
                 disabled={!amount || parseFloat(amount) <= 0}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                className="gkash-button w-full py-3 px-6 text-lg font-semibold disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 Download QR Code
               </button>
@@ -172,26 +177,33 @@ export default function MerchantPage() {
           </div>
 
           {/* Transaction History */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Transaction History</h2>
+          <div className="gkash-card p-8">
+            <div className="flex items-center mb-8">
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                <span className="text-2xl">📊</span>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Transaction History</h2>
+            </div>
             
             {transactions.length === 0 ? (
-              <div className="text-center py-8">
-                <div className="text-gray-400 text-6xl mb-4">📱</div>
-                <p className="text-gray-500">No transactions yet</p>
+              <div className="text-center py-12">
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-4xl text-gray-400">📱</span>
+                </div>
+                <p className="text-gray-500 font-medium text-lg mb-2">No transactions yet</p>
                 <p className="text-sm text-gray-400">Generate a QR code to start receiving payments</p>
               </div>
             ) : (
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {transactions.map((transaction) => (
-                  <div key={transaction.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                  <div key={transaction.id} className="bg-white rounded-xl p-5 border border-gray-100 hover:shadow-md transition-all duration-300 hover:border-blue-200">
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="font-medium text-gray-900">{transaction.payer.name}</p>
-                        <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
+                        <p className="font-semibold text-gray-900 text-lg">{transaction.payer.name}</p>
+                        <p className="text-sm text-gray-500 font-medium">{formatDate(transaction.timestamp)}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-green-600">+{formatCurrency(transaction.amount)}</p>
+                        <p className="font-bold text-green-600 text-xl">+{formatCurrency(transaction.amount)}</p>
                       </div>
                     </div>
                   </div>
