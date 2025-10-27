@@ -49,3 +49,8 @@ next-env.d.ts
 prompt_documentation.md
 DEVELOPMENT_DOCUMENTATION.md
 /cursor_documentations
+
+# ngrok
+ngrok.exe
+ngrok
+ngrok.log
