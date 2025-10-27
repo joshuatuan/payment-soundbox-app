@@ -10,6 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 
+# Google Cloud credentials
+google-credentials.json
+
 # testing
 /coverage
 
@@ -45,3 +48,4 @@ next-env.d.ts
 # logs
 prompt_documentation.md
 DEVELOPMENT_DOCUMENTATION.md
+/cursor_documentations
