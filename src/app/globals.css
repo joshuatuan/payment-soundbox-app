@@ -37,6 +37,35 @@ body {
   line-height: 1.6;
 }
 
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s ease-out;
+}
+
 /* Custom GKash-style components */
 .gkash-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -58,12 +87,12 @@ body {
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px -1px rgba(102, 204, 255, 0.3);
+  cursor: pointer;
 }
 
 .gkash-button:hover {
   background: linear-gradient(135deg, var(--gkash-blue-dark) 0%, #003d8a 100%);
   box-shadow: 0 6px 8px -1px rgba(102, 204, 255, 0.4);
-  transform: translateY(-1px);
 }
 
 .gkash-button:disabled {
@@ -71,6 +100,7 @@ body {
   color: #94a3b8;
   box-shadow: none;
   transform: none;
+  cursor: not-allowed;
 }
 
 .gkash-input {
@@ -94,10 +124,15 @@ body {
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px -1px rgba(0, 166, 80, 0.3);
+  cursor: pointer;
 }
 
 .gkash-success-button:hover {
   background: linear-gradient(135deg, #008a3e 0%, #006b32 100%);
   box-shadow: 0 6px 8px -1px rgba(0, 166, 80, 0.4);
-  transform: translateY(-1px);
+  /* No transform animation for Add Funds button */
+}
+
+.gkash-success-button:disabled {
+  cursor: not-allowed;
 }
