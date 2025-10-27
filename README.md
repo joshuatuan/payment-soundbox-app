@@ -127,7 +127,6 @@ prisma/
 ## 🎨 UI/UX Features
 
 - **Responsive Design**: Works on desktop and mobile devices
-- **PayPal-style Colors**: Blue and white theme with green accents
 - **Smooth Animations**: Hover effects and transitions
 - **Loading States**: Visual feedback during API calls
 - **Error Handling**: User-friendly error messages
