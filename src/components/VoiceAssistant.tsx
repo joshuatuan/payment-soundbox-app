@@ -212,14 +212,14 @@ export default function VoiceAssistant({ userId, userType }: VoiceAssistantProps
       <button
         onClick={handleClick}
         disabled={state === 'processing' || state === 'speaking' || state === 'error'}
-        className={`fixed bottom-8 right-8 z-50 ${getButtonStyle()} text-white font-semibold px-6 py-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-75`}
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-50 ${getButtonStyle()} text-white font-semibold px-4 py-3 sm:px-5 sm:py-3.5 md:px-6 md:py-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-75 text-sm sm:text-base`}
         title="Voice Assistant"
       >
         {getButtonText()}
       </button>
 
       {error && (
-        <div className="fixed bottom-24 right-8 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg max-w-xs">
+        <div className="fixed bottom-16 right-4 sm:bottom-20 sm:right-6 md:bottom-24 md:right-8 z-50 bg-red-100 border border-red-400 text-red-700 px-3 py-2 sm:px-4 sm:py-3 rounded-lg shadow-lg max-w-[calc(100vw-2rem)] sm:max-w-xs text-xs sm:text-sm animate-fadeIn">
           {error}
         </div>
       )}
