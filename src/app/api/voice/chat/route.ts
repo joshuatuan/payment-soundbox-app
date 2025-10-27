@@ -12,7 +12,7 @@ const vertexAI = new VertexAI({
 })
 
 // Initialize Gemini model (using stable version available in asia-southeast1)
-const model = vertexAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
+const model = vertexAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' })
 
 export async function POST(request: NextRequest) {
   try {
