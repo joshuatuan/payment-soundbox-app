@@ -1,6 +1,6 @@
-# PayWave Soundbox - PayPal-style Payment Prototype
+# Gkash
 
-A Next.js application that simulates a payment flow between merchants and payers using QR codes and Text-to-Speech (TTS) confirmation.
+An application that simulates a payment flow between merchants and payers using QR codes and Text-to-Speech (TTS) confirmation.
 
 ## 🎯 Features
 

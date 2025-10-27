@@ -1,14 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --gkash-blue-dark: #0047AB;
+  --gkash-blue-light: #66CCFF;
+  --gkash-blue-gradient: linear-gradient(135deg, var(--gkash-blue-light) 0%, var(--gkash-blue-dark) 100%);
+  --gkash-gray: #f7f9fc;
+  --gkash-gray-dark: #6c757d;
+  --gkash-success: #00a650;
+  --gkash-success-light: #e6f7ed;
+  --gkash-warning: #ff9500;
+  --gkash-warning-light: #fff4e6;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -22,5 +32,72 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Custom GKash-style components */
+.gkash-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.gkash-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.gkash-button {
+  background: var(--gkash-blue-gradient);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(102, 204, 255, 0.3);
+}
+
+.gkash-button:hover {
+  background: linear-gradient(135deg, var(--gkash-blue-dark) 0%, #003d8a 100%);
+  box-shadow: 0 6px 8px -1px rgba(102, 204, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.gkash-button:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  box-shadow: none;
+  transform: none;
+}
+
+.gkash-input {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.gkash-input:focus {
+  border-color: var(--gkash-blue-light);
+  box-shadow: 0 0 0 3px rgba(102, 204, 255, 0.1);
+  outline: none;
+}
+
+.gkash-success-button {
+  background: linear-gradient(135deg, var(--gkash-success) 0%, #008a3e 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 166, 80, 0.3);
+}
+
+.gkash-success-button:hover {
+  background: linear-gradient(135deg, #008a3e 0%, #006b32 100%);
+  box-shadow: 0 6px 8px -1px rgba(0, 166, 80, 0.4);
+  transform: translateY(-1px);
 }

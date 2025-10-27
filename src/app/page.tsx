@@ -1,6 +1,10 @@
-'use client'
-
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'GKash – Welcome',
+  description: 'A modern payment app prototype with QR code payments and voice confirmation',
+}
 
 interface FeatureCardProps {
   icon: string
@@ -55,40 +59,45 @@ export default function HomePage() {
     },
     {
       icon: '🎨',
-      title: 'PayPal-style UI',
+      title: 'Modern and responsive UI',
       description: 'Beautiful, responsive design with TailwindCSS',
       bgColor: 'bg-teal-100'
     }
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            GKash
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            A payment app prototype with QR code payments and TTS voice confirmation
+        <div className="text-center mb-20">
+          <div className="flex items-center justify-center mb-6">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+              <span className="text-3xl font-bold text-white">GK</span>
+            </div>
+            <h1 className="text-6xl font-bold text-gray-900">
+              GKash
+            </h1>
+          </div>
+          <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-medium">
+            A modern payment app prototype with QR code payments and voice confirmation
           </p>
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
           {/* Merchant Card */}
-          <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+          <div className="gkash-card p-10">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl">🏪</span>
+              <div className="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <span className="text-3xl">🏪</span>
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Merchant Dashboard</h2>
-              <p className="text-gray-600 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Merchant Dashboard</h2>
+              <p className="text-gray-600 mb-8 text-lg font-medium">
                 Generate QR codes for payments, track transactions, and manage your business payments.
               </p>
               <Link
                 href="/merchant"
-                className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                className="gkash-button inline-block px-10 py-4 text-lg font-semibold rounded-xl"
               >
                 Open Merchant Dashboard
               </Link>
@@ -96,18 +105,18 @@ export default function HomePage() {
           </div>
 
           {/* Payer Card */}
-          <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+          <div className="gkash-card p-10">
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl">👤</span>
+              <div className="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <span className="text-3xl">👤</span>
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Payer Dashboard</h2>
-              <p className="text-gray-600 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Payer Dashboard</h2>
+              <p className="text-gray-600 mb-13 text-lg font-medium">
                 Upload QR codes to make payments, deposit funds, and hear voice confirmations.
               </p>
               <Link
                 href="/payer"
-                className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                className="gkash-success-button inline-block px-10 py-4 text-lg font-semibold rounded-xl"
               >
                 Open Payer Dashboard
               </Link>
@@ -116,9 +125,9 @@ export default function HomePage() {
         </div>
 
         {/* Features List */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="gkash-card p-10">
+          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Key Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <FeatureCard
                 key={index}
@@ -132,8 +141,8 @@ export default function HomePage() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12 text-gray-500">
-          <p>Built with Next.js, TypeScript, Prisma, and TailwindCSS</p>
+        <div className="text-center mt-16 text-gray-500 font-medium">
+          <p className="text-lg">Built with Next.js, TypeScript, Prisma, and TailwindCSS</p>
         </div>
       </div>
     </div>
