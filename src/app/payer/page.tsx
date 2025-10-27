@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import jsQR from 'jsqr'
+import VoiceAssistant from '@/components/VoiceAssistant'
 
 interface User {
   id: number
@@ -387,6 +388,8 @@ export default function PayerPage() {
           )}
         </div>
       </div>
+
+      <VoiceAssistant userId={2} userType="payer" />
     </div>
   )
 }

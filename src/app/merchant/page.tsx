@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { QRCodeCanvas } from 'qrcode.react'
 import QRCodeLib from 'qrcode'
+import VoiceAssistant from '@/components/VoiceAssistant'
 
 interface User {
   id: number
@@ -213,6 +214,8 @@ export default function MerchantPage() {
           </div>
         </div>
       </div>
+
+      <VoiceAssistant userId={1} userType="merchant" />
     </div>
   )
 }
