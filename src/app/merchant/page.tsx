@@ -117,24 +117,24 @@ export default function MerchantPage() {
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-gray-200/50 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="py-4 sm:py-6 md:py-8">
+          <div className="py-2.5 sm:py-6 md:py-8">
             {/* Back Button Row (Mobile Only) */}
-            <div className="mb-3 sm:hidden">
-              <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors active:scale-95">
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-medium">Back</span>
+            <div className="mb-2 sm:hidden">
+              <Link href="/" className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 transition-colors active:scale-95">
+                <ArrowLeft className="w-4 h-4" />
+                <span className="text-xs font-medium">Back</span>
               </Link>
             </div>
             
             {/* Main Header Content */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
               <div className="w-full sm:w-auto">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1">{merchant.name}</h1>
-                <p className="text-sm sm:text-base text-gray-600 font-medium">Merchant Dashboard</p>
+                <h1 className="text-xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-0.5 sm:mb-1">{merchant.name}</h1>
+                <p className="text-xs sm:text-base text-gray-600 font-medium">Merchant Dashboard</p>
               </div>
-              <div className="text-left sm:text-right w-full sm:w-auto bg-blue-50 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
-                <p className="text-xs sm:text-sm text-gray-500 font-medium mb-1">Total Balance</p>
-                <p className="text-2xl sm:text-2xl md:text-3xl font-bold text-blue-600">{formatCurrency(merchant.balance)}</p>
+              <div className="text-left sm:text-right w-full sm:w-auto bg-blue-50 sm:bg-transparent p-2 sm:p-0 rounded-lg sm:rounded-none">
+                <p className="text-xs sm:text-sm text-gray-500 font-medium mb-0.5 sm:mb-1">Total Balance</p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600">{formatCurrency(merchant.balance)}</p>
               </div>
             </div>
           </div>

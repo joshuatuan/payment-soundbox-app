@@ -81,12 +81,40 @@ export default function PayerPage() {
     }
   }
 
-  const speak = (text: string) => {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.lang = 'en-US'
-      utterance.rate = 0.9
-      speechSynthesis.speak(utterance)
+  const speak = async (text: string) => {
+    try {
+      const response = await fetch('/api/voice/speak', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      })
+
+      if (response.ok) {
+        const { audio } = await response.json()
+        const audioBlob = new Blob(
+          [Uint8Array.from(atob(audio), c => c.charCodeAt(0))],
+          { type: 'audio/mp3' }
+        )
+        const audioUrl = URL.createObjectURL(audioBlob)
+        const audioElement = new Audio(audioUrl)
+        
+        await new Promise<void>((resolve, reject) => {
+          audioElement.onended = () => resolve()
+          audioElement.onerror = reject
+          audioElement.play()
+        })
+        
+        URL.revokeObjectURL(audioUrl)
+      }
+    } catch (error) {
+      console.error('TTS error:', error)
+      // Fallback to browser TTS
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text)
+        utterance.lang = 'en-US'
+        utterance.rate = 0.9
+        speechSynthesis.speak(utterance)
+      }
     }
   }
 
@@ -116,9 +144,7 @@ export default function PayerPage() {
         setMessage(`₱${depositAmount} deposited successfully!`)
         
         // TTS for deposit
-        speak(`₱${depositAmount} deposited successfully. Your new balance is ₱${updatedPayer.balance}.`)
-        
-        setTimeout(() => setMessage(''), 3000)
+        await speak(`${depositAmount} pesos deposited successfully. Your new balance is ${updatedPayer.balance} pesos.`)
       } else {
         const error = await response.json()
         alert(error.error || 'Deposit failed')
@@ -306,9 +332,7 @@ export default function PayerPage() {
         
         // Enhanced TTS for payment confirmation
         const newBalance = payer.balance - qrData.amount
-        speak(`Payment confirmed. You have successfully sent ${qrData.amount} pesos to ${merchant?.name}. Your new balance is ${newBalance} pesos.`)
-        
-        setTimeout(() => setMessage(''), 5000)
+        await speak(`Payment confirmed. You have successfully sent ${qrData.amount} pesos to ${merchant?.name}. Your new balance is ${newBalance} pesos.`)
       } else {
         const error = await response.json()
         alert(error.error || 'Payment failed')
@@ -353,24 +377,24 @@ export default function PayerPage() {
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-gray-200/50 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="py-4 sm:py-6 md:py-8">
+          <div className="py-2.5 sm:py-6 md:py-8">
             {/* Back Button Row (Mobile Only) */}
-            <div className="mb-3 sm:hidden">
-              <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors active:scale-95">
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-sm font-medium">Back</span>
+            <div className="mb-2 sm:hidden">
+              <Link href="/" className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 transition-colors active:scale-95">
+                <ArrowLeft className="w-4 h-4" />
+                <span className="text-xs font-medium">Back</span>
               </Link>
             </div>
             
             {/* Main Header Content */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
               <div className="w-full sm:w-auto">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1">{payer.name}</h1>
-                <p className="text-sm sm:text-base text-gray-600 font-medium">Payer Dashboard</p>
+                <h1 className="text-xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-0.5 sm:mb-1">{payer.name}</h1>
+                <p className="text-xs sm:text-base text-gray-600 font-medium">Payer Dashboard</p>
               </div>
-              <div className="text-left sm:text-right w-full sm:w-auto bg-blue-50 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
-                <p className="text-xs sm:text-sm text-gray-500 font-medium mb-1">Current Balance</p>
-                <p className="text-2xl sm:text-2xl md:text-3xl font-bold text-blue-600">{formatCurrency(payer.balance)}</p>
+              <div className="text-left sm:text-right w-full sm:w-auto bg-blue-50 sm:bg-transparent p-2 sm:p-0 rounded-lg sm:rounded-none">
+                <p className="text-xs sm:text-sm text-gray-500 font-medium mb-0.5 sm:mb-1">Current Balance</p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600">{formatCurrency(payer.balance)}</p>
               </div>
             </div>
           </div>
@@ -379,8 +403,17 @@ export default function PayerPage() {
 
       {/* Message */}
       {message && (
-        <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 mx-3 mt-4 rounded-xl font-medium shadow-sm text-sm sm:text-base animate-fadeIn">
-          {message}
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mt-4">
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 pr-12 rounded-xl font-medium shadow-sm text-sm sm:text-base animate-fadeIn relative">
+            {message}
+            <button
+              onClick={() => setMessage('')}
+              className="absolute top-2 right-2 text-green-700 hover:text-green-900 transition-colors cursor-pointer p-1 hover:bg-green-200 rounded-lg"
+              aria-label="Close notification"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       )}
 
@@ -664,14 +697,14 @@ export default function PayerPage() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
                 onClick={closeModal}
-                className="flex-1 py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95 text-sm sm:text-base"
+                className="flex-1 py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95 cursor-pointer text-sm sm:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={handlePayment}
                 disabled={!confirmChecked || loading || (payer && payer.balance < qrData.amount)}
-                className="flex-1 py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl active:scale-95 text-sm sm:text-base flex items-center justify-center gap-2"
+                className="flex-1 py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 cursor-pointer disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl active:scale-95 text-sm sm:text-base flex items-center justify-center gap-2"
               >
                 {loading ? (
                   'Processing...'
